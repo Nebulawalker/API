@@ -7,10 +7,7 @@ from dotenv import load_dotenv
 
 def shorten_link (token: str, url: str) -> str:
     """Returns a short link (bitlink)"""
-    auth_header = {
-        "Authorization" : f"Bearer {token}", 
-        "Content-Type" : "application/json"
-    }
+    auth_header = {"Authorization" : f"Bearer {token}"}
     json_payload = {"long_url": f"{url}"}
     response = requests.post("https://api-ssl.bitly.com/v4/bitlinks", headers=auth_header, json=json_payload)
     response.raise_for_status()
@@ -20,10 +17,7 @@ def shorten_link (token: str, url: str) -> str:
 
 def count_clicks (token: str, url: str) -> int:
     """Returns the number of clicks on the bitlink"""
-    auth_header = {
-        "Authorization" : f"Bearer {token}",
-        "Content-Type" : "application/json"
-    }
+    auth_header = {"Authorization" : f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
     response = requests.get(f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}/clicks/summary", headers=auth_header)
@@ -34,10 +28,7 @@ def count_clicks (token: str, url: str) -> int:
 
 def is_bitlink(token: str, url: str) -> bool:
     """Checks if the link is a bitlink"""
-    auth_header = {
-        "Authorization" : f"Bearer {token}",
-        "Content-Type" : "application/json"
-    }
+    auth_header = {"Authorization" : f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
     response = requests.get(f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}", headers=auth_header)
@@ -45,15 +36,15 @@ def is_bitlink(token: str, url: str) -> bool:
 
 def main():
     load_dotenv()
-    BITLY_TOKEN = str(os.getenv("BITLY_TOKEN"))
+    bitly_token = str(os.getenv("BITLY_TOKEN"))
 
     try:
         link = input("Введите ссылку: ")
 
-        if is_bitlink(BITLY_TOKEN, link):
-            print(count_clicks(BITLY_TOKEN, link))
+        if is_bitlink(bitly_token, link):
+            print(count_clicks(bitly_token, link))
         else:
-            print(shorten_link(BITLY_TOKEN, link))
+            print(shorten_link(bitly_token, link))
 
     except requests.exceptions.HTTPError as error:
         print(f"В работе программы возникла ошибка:\n{error}")
