@@ -26,7 +26,7 @@ python main.py -h
 ```
 Для для сокращения ссылки (пример):
 ```
-python main.py https:\\github.com
+python main.py https://github.com
 ```
 Для вывода количества переходов по ссылке bitlink (пример):
 ```
