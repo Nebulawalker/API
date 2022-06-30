@@ -5,34 +5,45 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 
-def shorten_link (token: str, url: str) -> str:
+def shorten_link(token: str, url: str) -> str:
     """Returns a short link (bitlink)"""
-    auth_header = {"Authorization" : f"Bearer {token}"}
+    auth_header = {"Authorization": f"Bearer {token}"}
     json_payload = {"long_url": f"{url}"}
-    response = requests.post("https://api-ssl.bitly.com/v4/bitlinks", headers=auth_header, json=json_payload)
+    response = requests.post(
+        "https://api-ssl.bitly.com/v4/bitlinks",
+        headers=auth_header,
+        json=json_payload
+    )
     response.raise_for_status()
     bitlink = response.json()["link"]
     return bitlink
 
 
-def count_clicks (token: str, url: str) -> int:
+def count_clicks(token: str, url: str) -> int:
     """Returns the number of clicks on the bitlink"""
-    auth_header = {"Authorization" : f"Bearer {token}"}
+    auth_header = {"Authorization": f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
-    response = requests.get(f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}/clicks/summary", headers=auth_header)
+    response = requests.get(
+        f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}/clicks/summary",
+        headers=auth_header
+    )
     response.raise_for_status()
     clicks_count = response.json()["total_clicks"]
-    return clicks_count 
+    return clicks_count
 
 
 def is_bitlink(token: str, url: str) -> bool:
     """Checks if the link is a bitlink"""
-    auth_header = {"Authorization" : f"Bearer {token}"}
+    auth_header = {"Authorization": f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
-    response = requests.get(f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}", headers=auth_header)
+    response = requests.get(
+        f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}",
+        headers=auth_header
+    )
     return response.ok
+
 
 def main():
     load_dotenv()
