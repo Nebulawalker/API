@@ -50,18 +50,18 @@ def main():
     load_dotenv()
     bitly_token = os.getenv("BITLY_TOKEN")
 
-    try:
-        parser = argparse.ArgumentParser(
-            description="Скрипт работает с сервисом bit.ly. Обычную ссылку\
-            сокращает до вида https://bit.ly/ADCDEFG. При вводе \
-            ссылки битлинк - выводит количество переходов по ней."
-        )
-        parser.add_argument(
-            "link",
-            help="Ссылка на сайт, либо короткая ссылка bitlink"
-        )
-        link = parser.parse_args().link
+    parser = argparse.ArgumentParser(
+        description="Скрипт работает с сервисом bit.ly. Обычную ссылку\
+        сокращает до вида https://bit.ly/ADCDEFG. При вводе \
+        ссылки битлинк - выводит количество переходов по ней."
+    )
+    parser.add_argument(
+        "link",
+        help="Ссылка на сайт, либо короткая ссылка bitlink"
+    )
+    link = parser.parse_args().link
 
+    try:
         if is_bitlink(bitly_token, link):
             print(
                 f"Количество переходов по ссылке битли: "
