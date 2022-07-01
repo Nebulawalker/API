@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 def shorten_link(token: str, url: str) -> str:
     auth_header = {"Authorization": f"Bearer {token}"}
-    json_payload = {"long_url": f"{url}"}
+    json_payload = {"long_url": url}
     response = requests.post(
         "https://api-ssl.bitly.com/v4/bitlinks",
         headers=auth_header,
