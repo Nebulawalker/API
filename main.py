@@ -48,7 +48,7 @@ def is_bitlink(token: str, url: str) -> bool:
 
 def main():
     load_dotenv()
-    bitly_token = str(os.getenv("BITLY_TOKEN"))
+    bitly_token = os.getenv("BITLY_TOKEN")
 
     try:
         parser = argparse.ArgumentParser(
