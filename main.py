@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 
 def shorten_link(token: str, url: str) -> str:
-    """Returns a short link (bitlink)"""
     auth_header = {"Authorization": f"Bearer {token}"}
     json_payload = {"long_url": f"{url}"}
     response = requests.post(
@@ -21,7 +20,6 @@ def shorten_link(token: str, url: str) -> str:
 
 
 def count_clicks(token: str, url: str) -> int:
-    """Returns the number of clicks on the bitlink"""
     auth_header = {"Authorization": f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
@@ -35,7 +33,6 @@ def count_clicks(token: str, url: str) -> int:
 
 
 def is_bitlink(token: str, url: str) -> bool:
-    """Checks if the link is a bitlink"""
     auth_header = {"Authorization": f"Bearer {token}"}
     parsed_link = urlparse(url)
     bitlink = f"{parsed_link.netloc}{parsed_link.path}"
